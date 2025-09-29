@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class DoctorConnectBackendApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DoctorConnectBackendApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(DoctorConnectBackendApplication.class, args);
+    }
 
 }
