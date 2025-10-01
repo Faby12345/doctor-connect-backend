@@ -4,6 +4,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 @Service
 public class UserService {
 
@@ -53,6 +55,8 @@ public class UserService {
     public User findEmail(String email){
         email = email.trim().toLowerCase();
         return userRepository.findByEmail(email).orElseThrow();
-
+    }
+    public User findById(UUID id){
+        return userRepository.findById(id).orElseThrow();
     }
 }

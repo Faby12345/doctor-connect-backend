@@ -7,12 +7,18 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
+
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
-                .cors(cors -> {})  // let Spring use your WebMvcConfigurer
-                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
+                .csrf(csrf -> csrf.disable())   // MVP: off; add back later with tokens
+                .cors(cors -> {})               // enable Spring MVC CORS (see WebConfig)
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .anyRequest().permitAll()
+                );
+
         return http.build();
     }
 }
