@@ -4,6 +4,7 @@ import app.doctor_connect_backend.auth.app.AuthService;
 import app.doctor_connect_backend.auth.web.DTOs.LoginRequest;
 import app.doctor_connect_backend.auth.web.DTOs.RegisterRequest;
 import app.doctor_connect_backend.auth.web.DTOs.UserResponse;
+import app.doctor_connect_backend.user.Roles;
 import app.doctor_connect_backend.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:5174", allowedHeaders = "true")
+//@CrossOrigin(origins = "http://localhost:5174", allowedHeaders = "true")
 public class AuthController {
     private final AuthService authService;
     private final UserService userService;
@@ -44,7 +45,16 @@ public class AuthController {
         }
         var uid = (UUID) session.getAttribute("uid");
         if (uid == null) return null;
-        var user = userService.findById(uid);                       // load from DB
+        var user = userService.findById(uid);
+        if (user.getUserRole() == Roles.DOCTOR){
+            // provide info
+        }
+        if (user.getUserRole() == Roles.PATIENT){
+            // provide info
+        }
+        if (user.getUserRole() == Roles.ADMIN){
+            // provide info
+        }
         return new UserResponse(user.getId(), user.getFullName(), user.getEmail(), user.getUserRole(), user.getCreatedAt());
     }
     @GetMapping("/logout")
