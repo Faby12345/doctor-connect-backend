@@ -26,7 +26,7 @@ public class DoctorController {
         try{
             var doctor = doctorService.findByUser_id(UUID.fromString(id));
             var user = userService.findById(doctor.getUserId());
-            DoctorDTO dto = new DoctorDTO(doctor.getUserId(), user.getFullName(), doctor.getSpeciality(), doctor.getCity(), doctor.getPriceMinCents(), doctor.getPriceMaxCents(), doctor.isVerified(),doctor.getRatingAvg() ,doctor.getRatingCount());
+            DoctorDTO dto = new DoctorDTO(doctor.getUserId(), user.getFullName(), doctor.getSpeciality(),doctor.getBio(),doctor.getCity(), doctor.getPriceMinCents(), doctor.getPriceMaxCents(), doctor.isVerified(),doctor.getRatingAvg() ,doctor.getRatingCount());
             return ResponseEntity.ok(dto);
         } catch (Exception e){
             return ResponseEntity.notFound().build();

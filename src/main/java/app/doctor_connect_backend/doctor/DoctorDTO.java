@@ -10,6 +10,7 @@ public record DoctorDTO(
         UUID id,
         String fullName,
         String speciality,
+        String bio,
         String city,
         int priceMinCents,
         int priceMaxCents,

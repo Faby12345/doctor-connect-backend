@@ -37,14 +37,16 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    public UserResponse me(HttpServletRequest http){
+    public ResponseEntity<UserResponse> me(HttpServletRequest http){
         var session = http.getSession(false);
         if(session == null){
             System.out.println("User is a guest!");
-            return null;
+            return ResponseEntity.status(401).build();
         }
         var uid = (UUID) session.getAttribute("uid");
-        if (uid == null) return null;
+        if (uid == null) {
+            return ResponseEntity.status(401).build();
+        }
         var user = userService.findById(uid);
         if (user.getUserRole() == Roles.DOCTOR){
             // provide info
@@ -55,7 +57,8 @@ public class AuthController {
         if (user.getUserRole() == Roles.ADMIN){
             // provide info
         }
-        return new UserResponse(user.getId(), user.getFullName(), user.getEmail(), user.getUserRole(), user.getCreatedAt());
+        var res = new UserResponse(user.getId(), user.getFullName(), user.getEmail(), user.getUserRole(), user.getCreatedAt());
+        return ResponseEntity.ok(res);
     }
     @GetMapping("/logout")
     public ResponseEntity<Void> logout(HttpServletRequest http){

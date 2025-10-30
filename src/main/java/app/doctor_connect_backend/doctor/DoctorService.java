@@ -22,6 +22,7 @@ public class DoctorService {
                         d.getUserId(),
                         null, // or fetch fullName if available
                         d.getSpeciality(),
+                        d.getBio(),
                         d.getCity(),
                         d.getPriceMinCents(),
                         d.getPriceMaxCents(),
