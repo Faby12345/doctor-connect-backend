@@ -3,11 +3,9 @@ package app.doctor_connect_backend.appointments;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -39,6 +37,17 @@ public class AppointmentsController {
 
         Appointments saved = appointmentsRepo.save(app);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+    }
+    @GetMapping(value = "doctor/{id}")
+    public ResponseEntity<List<Appointments>> getAppForDoc(@PathVariable UUID id){
+
+        try{
+            var res = appointmentsService.GetAllAppointmentsDoctor(id);
+            return ResponseEntity.ok(res);
+        }
+        catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
 
